@@ -19,6 +19,7 @@ export default defineConfig({
     '@tsintergy/plugin-tailwindcss',
     '@tsintergy/plugin-use-service',
     '@tsintergy/plugin-emotioncss',
+    '@tsintergy/rsn/bin/plugin',
   ],
   tailwind: {},
   routes: [
@@ -38,4 +39,5 @@ export default defineConfig({
     },
   ],
   npmClient: 'pnpm',
+  mfsu: { strategy: 'normal', exclude: [/@tsintergy\/mcoss/] },
 });

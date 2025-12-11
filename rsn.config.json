@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "registry": "http://git.tsintergy.com:8070",
+  "authKey": "z-io7wpoXa89iCc4QUTF",
+  "packages": {
+    "@tsintergy/mcoss-components": {
+      "version": "0.1.1",
+      "registry": "http://git.tsintergy.com:8070",
+      "authKey": "z-io7wpoXa89iCc4QUTF",
+      "projectId": "2953",
+      "path": "packages/components",
+      "entry": "src/index.ts",
+      "localDependencies": ["@tsintergy/mcoss-utils"]
+    },
+    "@tsintergy/mcoss-utils": {
+      "version": "0.1.0",
+      "registry": "http://git.tsintergy.com:8070",
+      "authKey": "z-io7wpoXa89iCc4QUTF",
+      "projectId": "2953",
+      "path": "packages/utils",
+      "entry": "src/index.ts"
+    }
+  }
+}

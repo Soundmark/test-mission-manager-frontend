@@ -1,4 +1,5 @@
 import { useService } from '@umijs/max';
+import { Member } from './type';
 
 export const useGetTeamList = () =>
   useService<{ data: { name: string; id: string }[] }>({
@@ -7,14 +8,7 @@ export const useGetTeamList = () =>
 
 export const useGetMemberList = () =>
   useService<{
-    data: {
-      name: string;
-      id: string;
-      email: string;
-      level: number;
-      teamId: string;
-      needCertificate: boolean;
-    }[];
+    data: Member[];
   }>({ url: '/api/team/getMemberList' });
 
 export const useCertificate = () =>

@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@ahooksjs/use-request": "^2.8.15",
+    "@tsintergy/plugin-dvax": "^1.0.1",
     "@tsintergy/plugin-emotioncss": "^1.0.0",
     "@tsintergy/plugin-tailwindcss": "^1.0.2",
     "@tsintergy/plugin-use-service": "^2.2.9",

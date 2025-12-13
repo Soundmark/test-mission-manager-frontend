@@ -23,7 +23,9 @@ export default defineConfig({
     '@tsintergy/plugin-use-service',
     '@tsintergy/plugin-emotioncss',
     '@tsintergy/rsn/bin/plugin',
+    '@tsintergy/plugin-dvax',
   ],
+  dva: { skipModelValidate: true },
   tailwind: {},
   routes: [
     {

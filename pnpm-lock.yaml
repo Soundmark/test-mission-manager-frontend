@@ -39,6 +39,9 @@ importers:
       '@ahooksjs/use-request':
         specifier: ^2.8.15
         version: 2.8.15(react@18.3.1)
+      '@tsintergy/plugin-dvax':
+        specifier: ^1.0.1
+        version: 1.0.1(umi@4.6.5(@babel/core@7.28.5)(@types/node@24.10.1)(@types/react@18.3.27)(@types/webpack@5.28.5)(eslint@8.57.1)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(sass@1.54.0)(stylelint@14.8.2)(terser@5.44.1)(type-fest@1.4.0)(typescript@5.9.3)(webpack@5.103.0))
       '@tsintergy/plugin-emotioncss':
         specifier: ^1.0.0
         version: 1.0.0(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1490,6 +1493,11 @@ packages:
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==, tarball: https://registry.npmmirror.com/@trysound/sax/-/sax-0.2.0.tgz}
     engines: {node: '>=10.13.0'}
+
+  '@tsintergy/plugin-dvax@1.0.1':
+    resolution: {integrity: sha1-y4GklX3JOeK5QTNoJfouwkr8UlI=, tarball: http://192.168.1.10:9031/@tsintergy/plugin-dvax/download/@tsintergy/plugin-dvax-1.0.1.tgz}
+    peerDependencies:
+      umi: 3.x
 
   '@tsintergy/plugin-emotioncss@1.0.0':
     resolution: {integrity: sha1-Mnus6NlyWITluJxN5c9lzs6HX9M=, tarball: http://192.168.1.10:9031/@tsintergy/plugin-emotioncss/download/@tsintergy/plugin-emotioncss-1.0.0.tgz}
@@ -8770,6 +8778,10 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
 
   '@trysound/sax@0.2.0': {}
+
+  '@tsintergy/plugin-dvax@1.0.1(umi@4.6.5(@babel/core@7.28.5)(@types/node@24.10.1)(@types/react@18.3.27)(@types/webpack@5.28.5)(eslint@8.57.1)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(sass@1.54.0)(stylelint@14.8.2)(terser@5.44.1)(type-fest@1.4.0)(typescript@5.9.3)(webpack@5.103.0))':
+    dependencies:
+      umi: 4.6.5(@babel/core@7.28.5)(@types/node@24.10.1)(@types/react@18.3.27)(@types/webpack@5.28.5)(eslint@8.57.1)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(sass@1.54.0)(stylelint@14.8.2)(terser@5.44.1)(type-fest@1.4.0)(typescript@5.9.3)(webpack@5.103.0)
 
   '@tsintergy/plugin-emotioncss@1.0.0(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:

@@ -1,7 +1,10 @@
 import { defineConfig } from '@umijs/max';
 
 export default defineConfig({
-  antd: {},
+  antd: {
+    dark: true,
+    theme: { token: { colorPrimary: '#9dc0f6' } },
+  },
   access: {},
   model: {},
   initialState: {},
@@ -31,6 +34,11 @@ export default defineConfig({
       name: '首页',
       path: '/home',
       component: './Home',
+    },
+    {
+      name: '团队管理',
+      path: '/TeamManage',
+      component: './TeamManage',
     },
     {
       name: '选择身份',

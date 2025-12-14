@@ -1,4 +1,4 @@
-import { getRoleInfo } from '@/utils/member';
+import globalModel from '@/models/global';
 import { Form, Input, message, Modal } from 'antd';
 import { Dispatch, SetStateAction } from 'react';
 import { useCreateTeam } from './service';
@@ -26,7 +26,8 @@ function CreateModal({ open, setOpen, data, fetchData }: Readonly<P>) {
       message.error('该团队已存在！');
       return;
     }
-    const { id } = getRoleInfo()!;
+    const { role } = globalModel.getState();
+    const { id } = role!;
     await create({ name, creator: id });
     fetchData();
     onCancel();

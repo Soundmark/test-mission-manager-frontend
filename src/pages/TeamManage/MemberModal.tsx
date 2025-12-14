@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-nested-functions */
+import globalModel from '@/models/global';
 import { levelEnum } from '@/utils/enum';
-import { getRoleInfo } from '@/utils/member';
 import { commonEnum } from '@tsintergy/mcoss-utils';
 import { Button, Modal, Popconfirm, Table, TableColumnsType } from 'antd';
 import { Dispatch, SetStateAction, useMemo } from 'react';
@@ -32,7 +32,7 @@ function MemberModal({
   };
 
   const columns = useMemo<TableColumnsType<any>>(() => {
-    const role = getRoleInfo();
+    const { role } = globalModel.getState();
     return [
       {
         title: '姓名',

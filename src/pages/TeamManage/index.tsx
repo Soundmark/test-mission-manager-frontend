@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-nested-functions */
-import { getRoleInfo } from '@/utils/member';
+import globalModel from '@/models/global';
 import { Button, message, Modal, Table, TableColumnsType } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { useGetMemberList, useGetTeamList } from '../SelectRole/service';
@@ -27,7 +27,7 @@ function Index() {
   }, []);
 
   const columns = useMemo<TableColumnsType<any>>(() => {
-    const role = getRoleInfo();
+    const { role } = globalModel.getState();
     return [
       {
         title: '名称',

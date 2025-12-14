@@ -1,15 +1,16 @@
 import globalModel from '@/models/global';
-import { Member } from '@/pages/SelectRole/type';
+import { Member } from '@/pages/RoleManage/type';
 import { sse } from '@tsintergy/mcoss-utils';
 import { history, Icon, Outlet, useLocation, useSelector } from '@umijs/max';
 import { Menu } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { routes } from '../../config/routes';
 import SSERegister from './SSERegister';
 
 function Layout() {
   const { role } = useSelector(globalModel.selector);
   const { pathname } = useLocation();
+  const [readySSE, setReadySSE] = useState(false);
 
   useEffect(() => {
     const role: Member = JSON.parse(localStorage.getItem('tmm-role') ?? '{}');
@@ -21,12 +22,15 @@ function Layout() {
   useEffect(() => {
     if (role) {
       sse.setSSEUrl(`http://localhost:3000/api/notification/sse/${role.id}`);
+      setReadySSE(true);
+    } else {
+      setReadySSE(false);
     }
   }, [role]);
 
   return (
     <div className="bg-[#141414] h-screen flex">
-      {role && <SSERegister></SSERegister>}
+      {readySSE && <SSERegister></SSERegister>}
       <div className="h-full">
         <div
           className="w-[226px] flex items-center p-4 gap-2"

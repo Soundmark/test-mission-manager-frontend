@@ -1,4 +1,4 @@
-import { Member } from '@/pages/SelectRole/type';
+import { Member } from '@/pages/RoleManage/type';
 import { createModel } from '@umijs/max';
 
 interface P {

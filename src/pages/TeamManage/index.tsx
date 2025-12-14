@@ -1,8 +1,9 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import globalModel from '@/models/global';
+import { useSelector } from '@umijs/max';
 import { Button, message, Modal, Table, TableColumnsType } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
-import { useGetMemberList, useGetTeamList } from '../SelectRole/service';
+import { useGetMemberList, useGetTeamList } from '../RoleManage/service';
 import AddMemberModal from './AddMemberModal';
 import CreateModal from './CreateModal';
 import MemberModal from './MemberModal';
@@ -10,6 +11,7 @@ import { useDeleteTeam } from './service';
 import { Team } from './type';
 
 function Index() {
+  const { role } = useSelector(globalModel.selector);
   const [open, setOpen] = useState('');
   const [record, setRecord] = useState<Team>();
 
@@ -27,7 +29,6 @@ function Index() {
   }, []);
 
   const columns = useMemo<TableColumnsType<any>>(() => {
-    const { role } = globalModel.getState();
     return [
       {
         title: '名称',
@@ -64,6 +65,7 @@ function Index() {
               <Button
                 type="link"
                 style={{ padding: 0 }}
+                disabled={!role || role?.id !== row.creator}
                 onClick={() => {
                   setRecord(row);
                   setOpen('添加成员');
@@ -75,7 +77,7 @@ function Index() {
                 type="link"
                 style={{ padding: 0 }}
                 danger
-                disabled={role?.id !== row.creator}
+                disabled={!role || role?.id !== row.creator}
                 onClick={() => {
                   if (
                     memberList?.some((item) => item.teamIds.includes(row.id))
@@ -100,7 +102,7 @@ function Index() {
         },
       },
     ];
-  }, [data, memberList]);
+  }, [data, memberList, role]);
 
   return (
     <div>
@@ -110,6 +112,7 @@ function Index() {
           onClick={() => {
             setOpen('创建团队');
           }}
+          disabled={!role}
         >
           创建团队
         </Button>
@@ -123,7 +126,10 @@ function Index() {
       <CreateModal
         open={open}
         setOpen={setOpen}
-        fetchData={run}
+        fetchData={() => {
+          run();
+          getMemberList();
+        }}
         data={data}
       ></CreateModal>
       <MemberModal

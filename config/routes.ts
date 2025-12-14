@@ -21,9 +21,9 @@ export const routes: Routes[] = [
         component: './TeamManage',
       },
       {
-        name: '选择身份',
-        path: '/SelectRole',
-        component: './SelectRole',
+        name: '身份管理',
+        path: '/RoleManage',
+        component: './RoleManage',
       },
     ],
   },

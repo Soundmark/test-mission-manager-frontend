@@ -3,6 +3,6 @@ export interface Member {
   id: string;
   email: string;
   level: number;
-  teamId: string;
+  teamIds: string[];
   needCertificate: boolean;
 }

@@ -4,7 +4,7 @@ import { levelEnum } from '@/utils/enum';
 import { commonEnum } from '@tsintergy/mcoss-utils';
 import { Button, Modal, Popconfirm, Table, TableColumnsType } from 'antd';
 import { Dispatch, SetStateAction, useMemo } from 'react';
-import { Member } from '../SelectRole/type';
+import { Member } from '../RoleManage/type';
 import { useUpdateMember } from './service';
 import { Team } from './type';
 

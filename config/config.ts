@@ -11,6 +11,7 @@ export default defineConfig({
   initialState: {},
   request: {},
   layout: false,
+  locale: { antd: true },
   proxy: {
     '/api': {
       target: 'http://localhost:3000',

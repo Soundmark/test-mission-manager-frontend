@@ -1,4 +1,5 @@
 import { defineConfig } from '@umijs/max';
+import { routes } from './routes';
 
 export default defineConfig({
   antd: {
@@ -9,9 +10,7 @@ export default defineConfig({
   model: {},
   initialState: {},
   request: {},
-  layout: {
-    title: 'Test-Mission-Manager',
-  },
+  layout: false,
   proxy: {
     '/api': {
       target: 'http://localhost:3000',
@@ -27,27 +26,8 @@ export default defineConfig({
   ],
   dva: { skipModelValidate: true },
   tailwind: {},
-  routes: [
-    {
-      path: '/',
-      redirect: '/home',
-    },
-    {
-      name: '首页',
-      path: '/home',
-      component: './Home',
-    },
-    {
-      name: '团队管理',
-      path: '/TeamManage',
-      component: './TeamManage',
-    },
-    {
-      name: '选择身份',
-      path: '/SelectRole',
-      component: './SelectRole',
-    },
-  ],
+  routes: routes,
   npmClient: 'pnpm',
+  icons: {},
   mfsu: { strategy: 'normal', exclude: [/@tsintergy\/mcoss/] },
 });

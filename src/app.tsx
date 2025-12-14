@@ -1,29 +1,8 @@
 // 运行时配置
 
-import { history } from '@umijs/max';
-import logo from './assets/imgs/test.svg';
-import Layout from './layout';
-
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 export async function getInitialState(): Promise<{ name: string }> {
+  // history.push('/Home');
   return { name: '@umijs/max' };
-}
-
-export const layout = () => {
-  return {
-    logo,
-    menu: {
-      locale: false,
-    },
-    rightRender: () => <Layout></Layout>,
-  };
-};
-
-export function render(oldRender: any) {
-  const role = JSON.parse(localStorage.getItem('tmm-role') ?? 'null');
-  if (!role && history.location.pathname !== '/SelectRole') {
-    history.push('/SelectRole');
-  }
-  oldRender();
 }

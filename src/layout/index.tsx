@@ -53,7 +53,7 @@ function Layout() {
           onSelect={(info) => {
             history.push(info.key);
           }}
-          items={routes[0].routes?.map((item) => ({
+          items={routes[1].routes?.map((item) => ({
             label: item.name,
             key: item.path,
           }))}

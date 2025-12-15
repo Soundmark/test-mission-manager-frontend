@@ -8,12 +8,16 @@ type Routes = Exclude<
 export const routes: Routes[] = [
   {
     path: '/',
+    redirect: '/MissionManage',
+  },
+  {
+    path: '/',
     component: '@/layout/index',
     routes: [
       {
-        name: '首页',
-        path: '/Home',
-        component: './Home',
+        name: '任务管理',
+        path: '/MissionManage',
+        component: './MissionManage',
       },
       {
         name: '团队管理',

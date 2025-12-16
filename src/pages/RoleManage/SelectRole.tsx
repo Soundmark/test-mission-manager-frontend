@@ -22,10 +22,6 @@ function SelectRole({ teamList }: Readonly<P>) {
     getMemberList();
   }, []);
 
-  const fetchMember = () => {
-    getMemberList({ teamId });
-  };
-
   const options = useMemo(() => {
     if (memberList?.length) {
       return memberList
@@ -120,7 +116,7 @@ function SelectRole({ teamList }: Readonly<P>) {
       <CreateModal
         open={open}
         setOpen={setOpen}
-        fetchMember={fetchMember}
+        fetchMember={getMemberList}
       ></CreateModal>
     </div>
   );

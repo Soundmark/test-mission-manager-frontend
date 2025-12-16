@@ -1,14 +1,43 @@
-import { Button, Dropdown, Table, TableColumnsType } from 'antd';
-import { useMemo, useState } from 'react';
+import globalModel from '@/models/global';
+import { missionStatusEnum } from '@/utils/enum';
+import { commonEnum } from '@tsintergy/mcoss-utils';
+import { useSelector } from '@umijs/max';
+import { Button, Dropdown, Table, TableColumnsType, Tag, Tooltip } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import { useGetMemberList } from '../RoleManage/service';
 import CloseModal from './CloseModal';
 import FinishModal from './FinishModal';
 import ReassignModal from './ReassignModal';
 import RemarkModal from './RemarkModal';
+import { useGetMissionList } from './service';
 
 function Index() {
+  const { role } = useSelector(globalModel.selector);
   const [open, setOpen] = useState('');
 
-  // const { run: getMemberList } = useGetMemberList();
+  const { run: getMemberList, data: memberList } = useGetMemberList();
+  const {
+    run: getMissionList,
+    data: missionList,
+    loading,
+  } = useGetMissionList();
+
+  useEffect(() => {
+    getMemberList();
+  }, []);
+
+  useEffect(() => {
+    if (role) {
+      getMissionList({ memberId: role.id });
+    }
+  }, [role]);
+
+  const memberMap = useMemo(() => {
+    if (memberList?.length) {
+      return Object.fromEntries(memberList.map((item) => [item.id, item]));
+    }
+    return {};
+  }, [memberList]);
 
   const columns = useMemo<TableColumnsType<any>>(() => {
     return [
@@ -26,21 +55,40 @@ function Index() {
         title: '发起人',
         dataIndex: 'sourceMemberId',
         width: 100,
+        render: (t) => {
+          return memberMap[t].name;
+        },
       },
       {
         title: '接受人',
         dataIndex: 'targetMemberId',
         width: 100,
+        render: (t) => {
+          return memberMap[t].name;
+        },
       },
       {
         title: '当前流转',
         dataIndex: 'assignee',
         width: 100,
+        render: (t) => {
+          return memberMap[t].name;
+        },
       },
       {
         title: '状态',
         dataIndex: 'status',
         width: 100,
+        render: (t) => {
+          const text = commonEnum.getEnumText(missionStatusEnum, t);
+          const colorMap: Record<string, string> = {
+            待确认: 'gold',
+            进行中: 'blue',
+            完成: 'green',
+            异常: 'red',
+          };
+          return <Tag color={colorMap[text!]}>{text}</Tag>;
+        },
       },
       {
         title: '发起分支',
@@ -56,16 +104,33 @@ function Index() {
         title: '仓库',
         dataIndex: 'giturl',
         width: 200,
+        render: (t) => {
+          return (
+            <Tooltip title={t}>
+              <div
+                style={{ width: 200 - 32 }}
+                className="overflow-hidden text-ellipsis whitespace-nowrap text-[#1668dc] cursor-pointer"
+                onClick={() => {
+                  if (t) {
+                    window.open(t, '_blank');
+                  }
+                }}
+              >
+                {t}
+              </div>
+            </Tooltip>
+          );
+        },
       },
       {
         title: '创建时间',
         dataIndex: 'createTime',
-        width: 100,
+        width: 160,
       },
       {
         title: '更新时间',
         dataIndex: 'updateTime',
-        width: 100,
+        width: 160,
       },
       {
         title: '备注',
@@ -126,14 +191,15 @@ function Index() {
         },
       },
     ];
-  }, []);
+  }, [memberMap]);
 
   return (
     <div>
       <Table
         columns={columns}
-        dataSource={[{ key: '1' }]}
+        dataSource={missionList}
         scroll={{ x: 'max-content' }}
+        loading={loading}
       ></Table>
       <RemarkModal open={open} setOpen={setOpen}></RemarkModal>
       <CloseModal open={open} setOpen={setOpen}></CloseModal>

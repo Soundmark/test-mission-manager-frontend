@@ -6,3 +6,10 @@ export const levelEnum = [
   { text: '工程师', id: 4 },
   { text: '实习生', id: 5 },
 ];
+
+export const missionStatusEnum = [
+  { text: '待确认', id: 'prepare' },
+  { text: '进行中', id: 'open' },
+  { text: '完成', id: 'close' },
+  { text: '异常', id: 'abnormal' },
+];

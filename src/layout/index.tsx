@@ -33,7 +33,7 @@ function Layout() {
       {readySSE && <SSERegister></SSERegister>}
       <div className="h-full">
         <div
-          className="w-[226px] flex items-center p-4 gap-2"
+          className="w-[230px] flex items-center p-4 gap-2"
           style={{ borderInlineEnd: '1px solid rgba(253,253,253,0.12)' }}
         >
           <div className="relative">
@@ -59,7 +59,7 @@ function Layout() {
           }))}
         ></Menu>
       </div>
-      <div className="h-full p-8" style={{ width: 'calc(100% - 226px)' }}>
+      <div className="h-full p-8" style={{ width: 'calc(100% - 230px)' }}>
         <Outlet></Outlet>
       </div>
     </div>

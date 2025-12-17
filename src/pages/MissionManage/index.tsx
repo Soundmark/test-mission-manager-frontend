@@ -1,5 +1,6 @@
 import globalModel from '@/models/global';
 import { missionStatusEnum } from '@/utils/enum';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import { commonEnum } from '@tsintergy/mcoss-utils';
 import { useSelector } from '@umijs/max';
 import { Button, Dropdown, Table, TableColumnsType, Tag, Tooltip } from 'antd';
@@ -32,9 +33,18 @@ function Index() {
     }
   }, [role]);
 
-  const memberMap = useMemo(() => {
+  const memberIdMap = useMemo(() => {
     if (memberList?.length) {
       return Object.fromEntries(memberList.map((item) => [item.id, item]));
+    }
+    return {};
+  }, [memberList]);
+
+  const memberUsernameMap = useMemo(() => {
+    if (memberList?.length) {
+      return Object.fromEntries(
+        memberList.map((item) => [item.username, item]),
+      );
     }
     return {};
   }, [memberList]);
@@ -56,7 +66,7 @@ function Index() {
         dataIndex: 'sourceMemberId',
         width: 100,
         render: (t) => {
-          return memberMap[t].name;
+          return memberIdMap[t].name;
         },
       },
       {
@@ -64,15 +74,24 @@ function Index() {
         dataIndex: 'targetMemberId',
         width: 100,
         render: (t) => {
-          return memberMap[t].name;
+          return memberIdMap[t].name;
         },
       },
       {
-        title: '当前流转',
-        dataIndex: 'assignee',
-        width: 100,
-        render: (t) => {
-          return memberMap[t].name;
+        title: (
+          <div className="flex gap-2">
+            <span>参与者</span>
+            <Tooltip title="参与过这个mr的gitlab用户">
+              <QuestionCircleOutlined />
+            </Tooltip>
+          </div>
+        ),
+        dataIndex: 'mrInvolvers',
+        width: 200,
+        render: (t: string[]) => {
+          return t
+            .map((item) => memberUsernameMap[item]?.name ?? item)
+            .join('、');
         },
       },
       {
@@ -191,7 +210,7 @@ function Index() {
         },
       },
     ];
-  }, [memberMap]);
+  }, [memberIdMap, memberUsernameMap]);
 
   return (
     <div>

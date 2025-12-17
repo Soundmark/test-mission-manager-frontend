@@ -56,6 +56,21 @@ function Index() {
                 type="link"
                 style={{ padding: 0 }}
                 onClick={() => {
+                  navigator.clipboard
+                    .writeText(
+                      `${window.location.origin}/api/webhook/gitlab/${row.id}`,
+                    )
+                    .then(() => {
+                      message.success('已复制');
+                    });
+                }}
+              >
+                gitlab钩子
+              </Button>
+              <Button
+                type="link"
+                style={{ padding: 0 }}
+                onClick={() => {
                   setRecord(row);
                   setOpen('查看成员');
                 }}

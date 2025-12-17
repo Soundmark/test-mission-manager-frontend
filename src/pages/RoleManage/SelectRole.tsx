@@ -1,9 +1,10 @@
+import { useMemberList } from '@/hooks/useMemberList';
 import globalModel from '@/models/global';
 import { Button, Form, Input, message, Select } from 'antd';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Team } from '../TeamManage/type';
 import CreateModal from './CreateModal';
-import { useCertificate, useGetMemberList } from './service';
+import { useCertificate } from './service';
 
 interface P {
   teamList?: Team[];
@@ -15,12 +16,8 @@ function SelectRole({ teamList }: Readonly<P>) {
   const memberId = Form.useWatch('memberId', form);
   const [open, setOpen] = useState(false);
 
-  const { run: getMemberList, data: memberList } = useGetMemberList();
+  const { getMemberList, memberList } = useMemberList();
   const { run: certificate, loading: certificateLoading } = useCertificate();
-
-  useEffect(() => {
-    getMemberList();
-  }, []);
 
   const options = useMemo(() => {
     if (memberList?.length) {

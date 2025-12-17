@@ -1,5 +1,5 @@
 import globalModel from '@/models/global';
-import { Member } from '@/pages/RoleManage/type';
+import { Member } from '@/services/member';
 import { sse } from '@tsintergy/mcoss-utils';
 import { history, Icon, Outlet, useLocation, useSelector } from '@umijs/max';
 import { Menu } from 'antd';

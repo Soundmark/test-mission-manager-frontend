@@ -1,10 +1,10 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import globalModel from '@/models/global';
+import { Member } from '@/services/member';
 import { levelEnum } from '@/utils/enum';
 import { commonEnum } from '@tsintergy/mcoss-utils';
 import { Button, Modal, Popconfirm, Table, TableColumnsType } from 'antd';
 import { Dispatch, SetStateAction, useMemo } from 'react';
-import { Member } from '../RoleManage/type';
 import { useUpdateMember } from './service';
 import { Team } from './type';
 

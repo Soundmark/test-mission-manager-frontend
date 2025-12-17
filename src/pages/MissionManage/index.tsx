@@ -1,3 +1,4 @@
+import { useMemberList } from '@/hooks/useMemberList';
 import globalModel from '@/models/global';
 import { missionStatusEnum } from '@/utils/enum';
 import { QuestionCircleOutlined } from '@ant-design/icons';
@@ -5,7 +6,6 @@ import { commonEnum } from '@tsintergy/mcoss-utils';
 import { useSelector } from '@umijs/max';
 import { Button, Dropdown, Table, TableColumnsType, Tag, Tooltip } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
-import { useGetMemberList } from '../RoleManage/service';
 import CloseModal from './CloseModal';
 import FinishModal from './FinishModal';
 import ReassignModal from './ReassignModal';
@@ -16,16 +16,12 @@ function Index() {
   const { role } = useSelector(globalModel.selector);
   const [open, setOpen] = useState('');
 
-  const { run: getMemberList, data: memberList } = useGetMemberList();
+  const { memberList } = useMemberList();
   const {
     run: getMissionList,
     data: missionList,
     loading,
   } = useGetMissionList();
-
-  useEffect(() => {
-    getMemberList();
-  }, []);
 
   useEffect(() => {
     if (role) {

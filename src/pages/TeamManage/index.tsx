@@ -1,9 +1,10 @@
 /* eslint-disable sonarjs/no-nested-functions */
+import { useMemberList } from '@/hooks/useMemberList';
 import globalModel from '@/models/global';
 import { useSelector } from '@umijs/max';
 import { Button, message, Modal, Table, TableColumnsType } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
-import { useGetMemberList, useGetTeamList } from '../RoleManage/service';
+import { useGetTeamList } from '../RoleManage/service';
 import AddMemberModal from './AddMemberModal';
 import CreateModal from './CreateModal';
 import MemberModal from './MemberModal';
@@ -17,15 +18,14 @@ function Index() {
 
   const { run, data, loading } = useGetTeamList();
   const {
-    run: getMemberList,
-    data: memberList,
+    getMemberList,
+    memberList,
     loading: memberListLoading,
-  } = useGetMemberList();
+  } = useMemberList();
   const { run: deleteTeam } = useDeleteTeam();
 
   useEffect(() => {
     run();
-    getMemberList();
   }, []);
 
   const columns = useMemo<TableColumnsType<any>>(() => {

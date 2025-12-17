@@ -1,4 +1,5 @@
 import globalModel from '@/models/global';
+import { Member } from '@/services/member';
 import { levelEnum } from '@/utils/enum';
 import { commonEnum } from '@tsintergy/mcoss-utils';
 import { useSelector } from '@umijs/max';
@@ -6,7 +7,6 @@ import { Button, Modal, Tag } from 'antd';
 import { useMemo, useState } from 'react';
 import { Team } from '../TeamManage/type';
 import CreateModal from './CreateModal';
-import { Member } from './type';
 
 interface P {
   teamList?: Team[];

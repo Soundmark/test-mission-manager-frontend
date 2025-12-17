@@ -1,6 +1,6 @@
+import { Member } from '@/services/member';
 import { Form, Modal, Select } from 'antd';
 import { Dispatch, SetStateAction, useMemo } from 'react';
-import { Member } from '../RoleManage/type';
 import { useUpdateMember } from './service';
 import { Team } from './type';
 

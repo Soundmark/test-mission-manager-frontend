@@ -1,3 +1,5 @@
+import { useService } from '@umijs/max';
+
 export interface Member {
   name: string;
   username: string;
@@ -7,3 +9,8 @@ export interface Member {
   teamIds: string[];
   needCertificate: boolean;
 }
+
+export const useGetMemberList = () =>
+  useService<{
+    data: Member[];
+  }>({ url: '/api/team/getMemberList' });

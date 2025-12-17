@@ -11,10 +11,12 @@ import FinishModal from './FinishModal';
 import ReassignModal from './ReassignModal';
 import RemarkModal from './RemarkModal';
 import { useGetMissionList } from './service';
+import { Mission } from './type';
 
 function Index() {
   const { role } = useSelector(globalModel.selector);
   const [open, setOpen] = useState('');
+  const [record, setRecord] = useState<Mission>();
 
   const { memberList } = useMemberList();
   const {
@@ -23,10 +25,14 @@ function Index() {
     loading,
   } = useGetMissionList();
 
-  useEffect(() => {
+  const fetchMissonList = () => {
     if (role) {
       getMissionList({ memberId: role.id });
     }
+  };
+
+  useEffect(() => {
+    fetchMissonList();
   }, [role]);
 
   const memberIdMap = useMemo(() => {
@@ -155,7 +161,7 @@ function Index() {
       {
         fixed: 'right',
         width: 160,
-        render: () => {
+        render: (t, row) => {
           return (
             <div className="flex gap-4">
               <Button
@@ -196,6 +202,7 @@ function Index() {
                 type="link"
                 style={{ padding: 0 }}
                 onClick={() => {
+                  setRecord(row);
                   setOpen('改派');
                 }}
               >
@@ -219,7 +226,12 @@ function Index() {
       <RemarkModal open={open} setOpen={setOpen}></RemarkModal>
       <CloseModal open={open} setOpen={setOpen}></CloseModal>
       <FinishModal open={open} setOpen={setOpen}></FinishModal>
-      <ReassignModal open={open} setOpen={setOpen}></ReassignModal>
+      <ReassignModal
+        open={open}
+        setOpen={setOpen}
+        record={record}
+        fetchMissonList={fetchMissonList}
+      ></ReassignModal>
     </div>
   );
 }

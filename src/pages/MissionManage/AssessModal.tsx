@@ -1,15 +1,19 @@
 import { Form, Modal, Radio, Table, TableColumnsType } from 'antd';
 import { Dispatch, SetStateAction, useMemo } from 'react';
+import { useUpdateMission } from './service';
 import { Mission } from './type';
 
 interface P {
   open: string;
   setOpen: Dispatch<SetStateAction<string>>;
   record?: Mission;
+  fetchMissionList: () => void;
 }
 
-function AssessModal({ open, setOpen }: Readonly<P>) {
+function AssessModal({ open, setOpen, record, fetchMissionList }: Readonly<P>) {
   const [form] = Form.useForm();
+
+  const { run: update, loading } = useUpdateMission();
 
   const columns = useMemo<TableColumnsType<any>>(() => {
     return [
@@ -221,7 +225,15 @@ function AssessModal({ open, setOpen }: Readonly<P>) {
   };
 
   const onOk = async () => {
-    // const formData = await form.validateFields();
+    const formData = await form.validateFields();
+    await update({
+      ...record,
+      assessment: formData,
+      status: record?.status === 'prefinish' ? 'finish' : record?.status,
+    });
+
+    fetchMissionList();
+    onCancel();
   };
 
   return (
@@ -233,6 +245,7 @@ function AssessModal({ open, setOpen }: Readonly<P>) {
       onOk={onOk}
       width={1200}
       maskClosable={false}
+      confirmLoading={loading}
     >
       <Form form={form}>
         <Table

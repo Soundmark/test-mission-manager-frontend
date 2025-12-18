@@ -5,12 +5,13 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import { commonEnum } from '@tsintergy/mcoss-utils';
 import { useSelector } from '@umijs/max';
 import { Button, Dropdown, Table, TableColumnsType, Tag, Tooltip } from 'antd';
+import { ItemType } from 'antd/es/menu/interface';
 import { useEffect, useMemo, useState } from 'react';
 import AssessModal from './AssessModal';
 import CloseModal from './CloseModal';
 import ReassignModal from './ReassignModal';
 import RemarkModal from './RemarkModal';
-import { useGetMissionList } from './service';
+import { useGetMissionList, useUpdateMission } from './service';
 import { Mission } from './type';
 
 function Index() {
@@ -24,6 +25,7 @@ function Index() {
     data: missionList,
     loading,
   } = useGetMissionList();
+  const { run: update } = useUpdateMission();
 
   const fetchMissonList = () => {
     if (role) {
@@ -164,6 +166,37 @@ function Index() {
         fixed: 'right',
         width: 160,
         render: (t, row) => {
+          const menuItems = (
+            [
+              row.status === 'prepare' &&
+                row.sourceMemberId === role?.id && {
+                  label: '确认',
+                  key: '确认',
+                  async onClick() {
+                    await update({ ...row, status: 'open' });
+                    fetchMissonList();
+                  },
+                },
+              row.status === 'prepare' &&
+                row.sourceMemberId === role?.id && {
+                  label: '关闭',
+                  key: '关闭',
+                  onClick() {
+                    setRecord(row);
+                    setOpen('关闭');
+                  },
+                },
+              ['open', 'prefinish'].includes(row.status) &&
+                row.targetMemberId === role?.id && {
+                  label: '评价',
+                  key: '评价',
+                  onClick() {
+                    setRecord(row);
+                    setOpen('评价');
+                  },
+                },
+            ] as ItemType[]
+          ).filter(Boolean);
           return (
             <div className="flex gap-4">
               <Button
@@ -176,43 +209,31 @@ function Index() {
               >
                 备注
               </Button>
-              <Dropdown
-                menu={{
-                  items: [
-                    { label: '确认', key: '确认', onClick() {} },
-                    {
-                      label: '关闭',
-                      key: '关闭',
-                      onClick() {
-                        setRecord(row);
-                        setOpen('关闭');
-                      },
-                    },
-                    {
-                      label: '评价',
-                      key: '评价',
-                      onClick() {
-                        setRecord(row);
-                        setOpen('评价');
-                      },
-                    },
-                  ],
-                }}
-              >
-                <Button type="link" style={{ padding: 0 }}>
-                  操作
+              {!!menuItems.length && (
+                <Dropdown
+                  menu={{
+                    items: menuItems,
+                  }}
+                >
+                  <Button type="link" style={{ padding: 0 }}>
+                    操作
+                  </Button>
+                </Dropdown>
+              )}
+              {((row.status !== 'finish' && row.targetMemberId === role?.id) ||
+                (row.status === 'prepare' &&
+                  row.sourceMemberId === role?.id)) && (
+                <Button
+                  type="link"
+                  style={{ padding: 0 }}
+                  onClick={() => {
+                    setRecord(row);
+                    setOpen('改派');
+                  }}
+                >
+                  改派
                 </Button>
-              </Dropdown>
-              <Button
-                type="link"
-                style={{ padding: 0 }}
-                onClick={() => {
-                  setRecord(row);
-                  setOpen('改派');
-                }}
-              >
-                改派
-              </Button>
+              )}
             </div>
           );
         },
@@ -224,7 +245,7 @@ function Index() {
     <div>
       <Table
         columns={columns}
-        dataSource={missionList}
+        dataSource={missionList?.toReversed()}
         scroll={{ x: 'max-content' }}
         loading={loading}
       ></Table>
@@ -240,7 +261,12 @@ function Index() {
         record={record}
         fetchMissionList={fetchMissonList}
       ></CloseModal>
-      <AssessModal open={open} setOpen={setOpen} record={record}></AssessModal>
+      <AssessModal
+        open={open}
+        setOpen={setOpen}
+        record={record}
+        fetchMissionList={fetchMissonList}
+      ></AssessModal>
       <ReassignModal
         open={open}
         setOpen={setOpen}

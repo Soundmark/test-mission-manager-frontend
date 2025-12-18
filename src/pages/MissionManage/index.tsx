@@ -6,8 +6,8 @@ import { commonEnum } from '@tsintergy/mcoss-utils';
 import { useSelector } from '@umijs/max';
 import { Button, Dropdown, Table, TableColumnsType, Tag, Tooltip } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
+import AssessModal from './AssessModal';
 import CloseModal from './CloseModal';
-import FinishModal from './FinishModal';
 import ReassignModal from './ReassignModal';
 import RemarkModal from './RemarkModal';
 import { useGetMissionList } from './service';
@@ -68,7 +68,7 @@ function Index() {
         dataIndex: 'sourceMemberId',
         width: 100,
         render: (t) => {
-          return memberIdMap[t].name;
+          return memberIdMap[t]?.name;
         },
       },
       {
@@ -76,7 +76,7 @@ function Index() {
         dataIndex: 'targetMemberId',
         width: 100,
         render: (t) => {
-          return memberIdMap[t].name;
+          return memberIdMap[t]?.name;
         },
       },
       {
@@ -107,6 +107,8 @@ function Index() {
             进行中: 'blue',
             完成: 'green',
             异常: 'red',
+            关闭: 'volcano',
+            待评价: 'magenta',
           };
           return <Tag color={colorMap[text!]}>{text}</Tag>;
         },
@@ -168,6 +170,7 @@ function Index() {
                 type="link"
                 style={{ padding: 0 }}
                 onClick={() => {
+                  setRecord(row);
                   setOpen('备注');
                 }}
               >
@@ -181,14 +184,16 @@ function Index() {
                       label: '关闭',
                       key: '关闭',
                       onClick() {
+                        setRecord(row);
                         setOpen('关闭');
                       },
                     },
                     {
-                      label: '完成',
-                      key: '完成',
+                      label: '评价',
+                      key: '评价',
                       onClick() {
-                        setOpen('完成');
+                        setRecord(row);
+                        setOpen('评价');
                       },
                     },
                   ],
@@ -223,9 +228,19 @@ function Index() {
         scroll={{ x: 'max-content' }}
         loading={loading}
       ></Table>
-      <RemarkModal open={open} setOpen={setOpen}></RemarkModal>
-      <CloseModal open={open} setOpen={setOpen}></CloseModal>
-      <FinishModal open={open} setOpen={setOpen}></FinishModal>
+      <RemarkModal
+        open={open}
+        setOpen={setOpen}
+        record={record}
+        fetchMissionList={fetchMissonList}
+      ></RemarkModal>
+      <CloseModal
+        open={open}
+        setOpen={setOpen}
+        record={record}
+        fetchMissionList={fetchMissonList}
+      ></CloseModal>
+      <AssessModal open={open} setOpen={setOpen} record={record}></AssessModal>
       <ReassignModal
         open={open}
         setOpen={setOpen}

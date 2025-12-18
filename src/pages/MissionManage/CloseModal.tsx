@@ -1,20 +1,36 @@
+import { missionStatusEnum } from '@/utils/enum';
+import { commonEnum } from '@tsintergy/mcoss-utils';
 import { Form, Modal, Radio } from 'antd';
 import { Dispatch, SetStateAction } from 'react';
+import { useUpdateMission } from './service';
+import { Mission } from './type';
 
 interface P {
   open: string;
   setOpen: Dispatch<SetStateAction<string>>;
+  record?: Mission;
+  fetchMissionList: () => void;
 }
 
-function CloseModal({ open, setOpen }: Readonly<P>) {
+function CloseModal({ open, setOpen, record, fetchMissionList }: Readonly<P>) {
   const [form] = Form.useForm();
+
+  const { run: update, loading } = useUpdateMission();
 
   const onCancel = () => {
     setOpen('');
+    form.resetFields();
   };
 
   const onOk = async () => {
-    // const { reason } = await form.validateFields();
+    const { reason } = await form.validateFields();
+    await update({
+      ...record,
+      status: commonEnum.getEnumId(missionStatusEnum, '关闭'),
+      closeReason: reason,
+    });
+    fetchMissionList();
+    onCancel();
   };
 
   return (
@@ -23,6 +39,7 @@ function CloseModal({ open, setOpen }: Readonly<P>) {
       open={open === '关闭'}
       onCancel={onCancel}
       onOk={onOk}
+      confirmLoading={loading}
     >
       <Form className="mt-4" form={form}>
         <Form.Item

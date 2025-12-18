@@ -10,6 +10,8 @@ export const levelEnum = [
 export const missionStatusEnum = [
   { text: '待确认', id: 'prepare' },
   { text: '进行中', id: 'open' },
-  { text: '完成', id: 'close' },
+  { text: '关闭', id: 'close' },
   { text: '异常', id: 'abnormal' },
+  { text: '待评价', id: 'prefinish' },
+  { text: '完成', id: 'finish' },
 ];

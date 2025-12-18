@@ -1,4 +1,5 @@
-import { useMemberList } from '@/hooks/useMemberList';
+import globalModel from '@/models/global';
+import { useSelector } from '@umijs/max';
 import { Form, Modal, Select } from 'antd';
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import { useUpdateMission } from './service';
@@ -18,7 +19,7 @@ function ReassignModal({
   fetchMissonList,
 }: Readonly<P>) {
   const [form] = Form.useForm();
-  const { memberList } = useMemberList();
+  const { memberList } = useSelector(globalModel.selector);
 
   const { run: update, loading } = useUpdateMission();
 
